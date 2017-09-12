@@ -2,10 +2,7 @@ const request = require('request')
 const cheerio = require('cheerio')
 const fs = require('fs')
 
-const file = 'cookie.txt'
-let cookie = fs.readFileSync(file).toString()
-
-function getData (domain) {
+function getData (domain, proxy) {
   return new Promise((resolve, reject) => {
     request({
       url: `https://www.similarweb.com/website/${domain}`,
@@ -19,8 +16,8 @@ function getData (domain) {
         Pragma: 'no-cache',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.8,es;q=0.6',
-        Cookie: cookie
-      }
+        'Proxy' : proxy ? proxy : undefined
+  }
     }, (error, response, body) => {
       if (error) {
         return reject(error)
