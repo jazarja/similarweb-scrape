@@ -37,11 +37,6 @@ function getData (domain, proxy) {
         return resolve(data)
       }
 
-      if (response.headers.cookie) {
-        cookie = response.headers['set-cookie']
-        fs.writeFile(file, cookie, () => {})
-      }
-
       const $ = cheerio.load(body)
 
       data.globalRank = $('[data-rank-subject="Global"] [data-value]').html()
@@ -53,10 +48,6 @@ function getData (domain, proxy) {
 
       if (data.category) {
         data.category = data.category.replace('&gt;', '>')
-      }
-
-      if (!data.globalRank) {
-        fs.writeFile(file, '', () => {})
       }
 
       resolve(data)
