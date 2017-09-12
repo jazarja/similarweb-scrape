@@ -6,6 +6,7 @@ function getData (domain, proxy) {
   return new Promise((resolve, reject) => {
     request({
       url: `https://www.similarweb.com/website/${domain}`,
+      'proxy' : proxy ? proxy : undefined,
       headers: {
         Host: 'www.similarweb.com',
         Referer: `https://www.similarweb.com/website/${domain}`,
@@ -16,7 +17,6 @@ function getData (domain, proxy) {
         Pragma: 'no-cache',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.8,es;q=0.6',
-        'Proxy' : proxy ? proxy : undefined
   }
     }, (error, response, body) => {
       if (error) {
