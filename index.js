@@ -1,6 +1,6 @@
-const request = require('request')
-const cheerio = require('cheerio')
-const fs = require('fs')
+const request = require('request');
+const cheerio = require('cheerio');
+const fs = require('fs');
 
 function getData (domain, proxy) {
   return new Promise((resolve, reject) => {
@@ -37,17 +37,23 @@ function getData (domain, proxy) {
         return resolve(data)
       }
 
-      const $ = cheerio.load(body)
+      const $ = cheerio.load(body);
 
-      data.globalRank = $('[data-rank-subject="Global"] [data-value]').html()
-      data.category = $('[data-rank-subject="Category"] .rankingItem-subTitle').html()
-      data.totalVisits = $('[data-type="visits"] .engagementInfo-valueNumber').html()
-      data.avgVisitDuration = $('[data-type="time"] .engagementInfo-valueNumber').html()
-      data.pagesPerVisit = $('[data-type="ppv"] .engagementInfo-valueNumber').html()
-      data.bounceRate = $('[data-type="bounce"] .engagementInfo-valueNumber').html()
+      data.globalRank = $('[data-rank-subject="Global"] [data-value]').html();
+      data.category = $('[data-rank-subject="Category"] .rankingItem-subTitle').html();
+      data.totalVisits = $('[data-type="visits"] .engagementInfo-valueNumber').html();
+      data.avgVisitDuration = $('[data-type="time"] .engagementInfo-valueNumber').html();
+      data.pagesPerVisit = $('[data-type="ppv"] .engagementInfo-valueNumber').html();
+      data.bounceRate = $('[data-type="bounce"] .engagementInfo-valueNumber').html();
+
+      data.similar = [];
+
+      $('li.similarSitesList-item').each(function(i, elem) {
+        data.similar.push($(this).attr("data-shorturl"));
+      });
 
       if (data.category) {
-        data.category = data.category.replace('&gt;', '>')
+        data.category = data.category.replace('&gt;', '>');
       }
 
       resolve(data)
