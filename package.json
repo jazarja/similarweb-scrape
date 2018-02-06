@@ -1,6 +1,6 @@
 {
   "name": "similarweb-scrape",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Scrapes [SimilarWeb](https://www.similarweb.com/) site to get analytics for domain.",
   "main": "index.js",
   "scripts": {
