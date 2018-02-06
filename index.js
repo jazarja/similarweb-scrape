@@ -40,7 +40,14 @@ function getData (domain, proxy) {
       const $ = cheerio.load(body);
 
       data.globalRank = $('[data-rank-subject="Global"] [data-value]').html();
+      if (data.globalRank===null || data.globalRank==='')
+      {
+          data.globalRank = $('.js-globalRank .websiteRanks-valueContainer').text().trim();
+      }
       data.category = $('[data-rank-subject="Category"] .rankingItem-subTitle').html();
+      if (data.category==null)
+          data.category =$('.js-categoryRank .websiteRanks-nameText').text().trim();
+
       data.totalVisits = $('[data-type="visits"] .engagementInfo-valueNumber').html();
       data.avgVisitDuration = $('[data-type="time"] .engagementInfo-valueNumber').html();
       data.pagesPerVisit = $('[data-type="ppv"] .engagementInfo-valueNumber').html();
